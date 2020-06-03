@@ -6,7 +6,9 @@ namespace ReinasProbabilistico
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Tablero t = new Tablero();
+
+            t.nReinas(4);
         }
     }
 }
