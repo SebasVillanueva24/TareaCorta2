@@ -186,6 +186,8 @@ namespace ReinasProbabilistico
 			{
 				Console.WriteLine(elemento);
 			}
+
+		
 		}
 	}
 }
