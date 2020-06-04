@@ -73,7 +73,7 @@ namespace ReinasProbabilistico
 					int vary2 = columna;
 
 
-					for (int k = columna+1; k >= 0; k--)
+					for (int k = columna+1; k > 0; k--)
 					{
 						if ( vary2 >= 0)
 						{
@@ -98,22 +98,35 @@ namespace ReinasProbabilistico
 								break;
 							}
 						}
-						
+
 						//Si la columna se repite
-						
 
-						//int varx = i;
-						//int vary = columna;
-						////Guardar la diagonal
-						//for (int k = 0; k <= N; k++)
-						//{
-						//	if (varx + 1 <= N && vary + 1 <= N)
-						//	{
-						//		posicionesProhibidas.Push((varx++, vary++));
-						//	}
 
-						//}
-						
+						int varx = i;
+						int vary = columna;
+						//Guardar la diagonal
+						for (int k = 0; k <= N; k++)
+						{
+							if (varx + 1 <= N && vary + 1 <= N)
+							{
+								posicionesProhibidas.Push((varx++, vary++));
+							}
+
+						}
+
+						int varx2 = i;
+						int vary2 = columna;
+
+
+						for (int k = columna + 1; k > 0; k--)
+						{
+							if (vary2 >= 0)
+							{
+								posicionesProhibidas.Push((varx2++, vary2--));
+							}
+
+						}
+
 						tablero[i, columna] = true;
 						reinasColocadas.Push((i, columna));
 					}
@@ -121,30 +134,46 @@ namespace ReinasProbabilistico
 					{
 						if(validarDiagonal(i,columna) == false)
 						{
+							
+
 							while (true)
 							{
 								//Ciclo que saca una columna hasta que no exista
 								columna = rnd.Next(0, N);
+								
 								if (validarColumna(columna) == true && validarDiagonal(i, columna) == true)
 								{
 									break;
 								}
 							}
 						}
-						
+
 						//Si la columna no existe
-						//int varx = i;
-						//int vary = columna;
+						int varx = i;
+						int vary = columna;
 
-						//for (int k = 0; k <= N; k++)
-						//{
-						//	if (varx + 1 <= N && vary + 1 <= N)
-						//	{
-						//		posicionesProhibidas.Push((varx++, vary++));
-						//	}
+						for (int k = 0; k <= N; k++)
+						{
+							if (varx + 1 <= N && vary + 1 <= N)
+							{
+								posicionesProhibidas.Push((varx++, vary++));
+							}
 
-						//}
+						}
 
+						int varx2 = i;
+						int vary2 = columna;
+
+
+						for (int k = columna + 1; k > 0; k--)
+						{
+							if (varx2 < N && vary2 >= 0)
+							{
+								posicionesProhibidas.Push((varx2++, vary2--));
+							}
+
+						}
+						
 						tablero[i, columna] = true;
 						reinasColocadas.Push((i, columna));
 					}
