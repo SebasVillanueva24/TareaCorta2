@@ -33,6 +33,18 @@ namespace ReinasProbabilistico
 			return true;
 		}
 
+		public bool validarDiagonal(int fila, int columna)
+		{
+			foreach (ValueTuple<int, int> elemento in posicionesProhibidas)
+			{
+				if (columna == elemento.Item2 && fila == elemento.Item1)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
 		public void nReinas(int N)
 		{
 			bool[,] tablero = new bool[N,N];
@@ -44,7 +56,7 @@ namespace ReinasProbabilistico
 
 				if (i == 0)
 				{
-					
+					//Primera fila
 					reinasColocadas.Push((i,columna));
 					int varx = i;
 					int vary = columna;
@@ -53,8 +65,6 @@ namespace ReinasProbabilistico
 					{
 						if (varx + 1 <= N && vary + 1 <= N)
 						{
-							Console.WriteLine(k);
-							Console.WriteLine(N);
 							posicionesProhibidas.Push((varx++, vary++));
 						}
 
@@ -67,37 +77,74 @@ namespace ReinasProbabilistico
 					{
 						if ( vary2 >= 0)
 						{
-							Console.WriteLine(varx2);
-							Console.WriteLine(vary2);
 							posicionesProhibidas.Push((varx2++, vary2--));
 						}
 
 					}
 					tablero[i, columna] = true;
-					//Console.WriteLine("Posicion del true" + i + " " + columna);
+					
 				}
 				else
 				{
+					//El resto de filas
 					if(validarColumna(columna) == false)
 					{
-						while(true)
+						while (true)
 						{
+							//Ciclo que saca una columna hasta que no exista
 							columna = rnd.Next(0, N);
-							if(validarColumna(columna) == true)
+							if (validarColumna(columna) == true && validarDiagonal(i, columna) == true)
 							{
 								break;
 							}
 						}
+						
+						//Si la columna se repite
+						
 
-						//Console.WriteLine(validarColumna(columna));
-						//Console.Write(Environment.NewLine + Environment.NewLine);
+						//int varx = i;
+						//int vary = columna;
+						////Guardar la diagonal
+						//for (int k = 0; k <= N; k++)
+						//{
+						//	if (varx + 1 <= N && vary + 1 <= N)
+						//	{
+						//		posicionesProhibidas.Push((varx++, vary++));
+						//	}
+
+						//}
+						
 						tablero[i, columna] = true;
 						reinasColocadas.Push((i, columna));
 					}
 					else
 					{
-						//Console.WriteLine(validarColumna(columna));
-						//Console.Write(Environment.NewLine + Environment.NewLine);
+						if(validarDiagonal(i,columna) == false)
+						{
+							while (true)
+							{
+								//Ciclo que saca una columna hasta que no exista
+								columna = rnd.Next(0, N);
+								if (validarColumna(columna) == true && validarDiagonal(i, columna) == true)
+								{
+									break;
+								}
+							}
+						}
+						
+						//Si la columna no existe
+						//int varx = i;
+						//int vary = columna;
+
+						//for (int k = 0; k <= N; k++)
+						//{
+						//	if (varx + 1 <= N && vary + 1 <= N)
+						//	{
+						//		posicionesProhibidas.Push((varx++, vary++));
+						//	}
+
+						//}
+
 						tablero[i, columna] = true;
 						reinasColocadas.Push((i, columna));
 					}

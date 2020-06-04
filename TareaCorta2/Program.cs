@@ -8,7 +8,7 @@ namespace ReinasProbabilistico
         {
             Tablero t = new Tablero();
 
-            t.nReinas(4);
+            t.nReinas(8);
         }
     }
 }
