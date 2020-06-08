@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ReinasProbabilistico
 {
@@ -19,6 +20,18 @@ namespace ReinasProbabilistico
 				Console.Write(Environment.NewLine + Environment.NewLine);
 			}
 
+		}
+
+		public bool chequearSiExiste(ArrayList lista, int n)
+		{ 
+			foreach(int num in lista)
+			{
+				if(num == n)
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public bool validarColumna(int columna)
@@ -45,9 +58,12 @@ namespace ReinasProbabilistico
 			return true;
 		}
 
-		public void nReinas(int N)
+		public bool nReinas(int N)
 		{
 			bool[,] tablero = new bool[N,N];
+
+			posicionesProhibidas.Clear();
+			reinasColocadas.Clear();
 
 			for(int i = 0; i < N; i++)
 			{
@@ -89,16 +105,40 @@ namespace ReinasProbabilistico
 					//El resto de filas
 					if(validarColumna(columna) == false)
 					{
+						ArrayList usadas = new ArrayList();
+
 						while (true)
 						{
 							//Ciclo que saca una columna hasta que no exista
 							columna = rnd.Next(0, N);
-							if (validarColumna(columna) == true && validarDiagonal(i, columna) == true)
-							{
-								break;
-							}
-						}
 
+							Console.WriteLine(usadas.Count);
+							if(usadas.Count >= N)
+							{
+								return false;
+							}
+							else
+							{
+								if (chequearSiExiste(usadas, columna) == false)
+								{
+									if (validarColumna(columna) == true && validarDiagonal(i, columna) == true)
+									{
+										break;
+									}
+									else
+									{
+										usadas.Add(columna);
+									}
+								}
+							}
+							
+						}
+						foreach (int elemento in usadas)
+						{
+							Console.WriteLine("ELEMENTOS USADOS PARA LA FILA: " + i);
+							Console.WriteLine(elemento);
+							Console.WriteLine("---------------------------");
+						}
 						//Si la columna se repite
 
 
@@ -120,7 +160,7 @@ namespace ReinasProbabilistico
 
 						for (int k = columna + 1; k > 0; k--)
 						{
-							if (vary2 >= 0)
+							if (varx2 < N && vary2 >= 0)
 							{
 								posicionesProhibidas.Push((varx2++, vary2--));
 							}
@@ -134,20 +174,46 @@ namespace ReinasProbabilistico
 					{
 						if(validarDiagonal(i,columna) == false)
 						{
-							
+							ArrayList usadas = new ArrayList();
 
 							while (true)
 							{
 								//Ciclo que saca una columna hasta que no exista
 								columna = rnd.Next(0, N);
-								
-								if (validarColumna(columna) == true && validarDiagonal(i, columna) == true)
+								Console.WriteLine(usadas.Count);
+
+								if(usadas.Count >= 4)
 								{
-									break;
+									return false;
 								}
+								else
+								{
+									if (chequearSiExiste(usadas, columna) == false)
+									{
+
+										if (validarColumna(columna) == true && validarDiagonal(i, columna) == true)
+										{
+											break;
+										}
+										else
+										{
+											usadas.Add(columna);
+										}
+
+									}
+								}
+								
+							}
+								
+							foreach (int elemento in usadas)
+							{
+								Console.WriteLine("ELEMENTOS USADOS PARA LA FILA: " + i);
+								Console.WriteLine(elemento);
+								Console.WriteLine("---------------------------");
 							}
 						}
 
+						
 						//Si la columna no existe
 						int varx = i;
 						int vary = columna;
@@ -182,12 +248,12 @@ namespace ReinasProbabilistico
 			}
 			imprimirMatriz(tablero, N);
 
-			foreach (ValueTuple<int, int> elemento in posicionesProhibidas)
-			{
-				Console.WriteLine(elemento);
-			}
+			//foreach (ValueTuple<int, int> elemento in posicionesProhibidas)
+			//{
+			//	Console.WriteLine(elemento);
+			//}
 
-		
+			return true;
 		}
 	}
 }

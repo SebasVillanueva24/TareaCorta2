@@ -8,7 +8,17 @@ namespace ReinasProbabilistico
 		{
 			Tablero t = new Tablero();
 
-			t.nReinas(4);
+			while (true)
+			{
+				if (t.nReinas(6))
+				{
+					break;
+				}
+			}
+
+			//bool reinas = t.nReinas(4);
+
+			//Console.WriteLine(reinas);
 		}
 	}
 }
