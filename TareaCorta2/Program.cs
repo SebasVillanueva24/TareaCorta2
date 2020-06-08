@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace ReinasProbabilistico
 {
@@ -8,17 +9,22 @@ namespace ReinasProbabilistico
 		{
 			Tablero t = new Tablero();
 
+			Stopwatch sw = new Stopwatch();
+
+			sw.Start();
+
 			while (true)
 			{
-				if (t.nReinas(6))
+				if (t.nReinas(10))
 				{
 					break;
 				}
 			}
 
-			//bool reinas = t.nReinas(4);
+			sw.Stop();
 
-			//Console.WriteLine(reinas);
+			Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
+			
 		}
 	}
 }
